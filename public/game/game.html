@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>game</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/game/game.css">
+    <link rel="stylesheet" href="../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/ale.js"></script>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../js/fileinput.min.js"></script>
+</head>
+<body>
+
+<div class="head ui_flex_wrapper ui_flex_h">
+    <div>
+        <form class="bs-example bs-example-form" role="form">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1" id="search_text">名称<span class="caret"></span></button>
+
+                            <ul class="dropdown-menu" id="search_cls">
+                                <li>
+                                    <a href="#">ID</a>
+                                </li>
+                                <li>
+                                    <a href="#">名称</a>
+                                </li>
+                                <li>
+                                    <a href="#">分类</a>
+                                </li>
+                                <li>
+                                    <a href="#">上架</a>
+                                </li>
+                                <li>
+                                    <a href="#">系统</a>
+                                </li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							Search
+						</button>
+					</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade " id="add_game_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加游戏
+                </h4>
+            </div>
+            <div class="modal-body" id="add_game_mb">
+                <form role="form" id="add_game_form">
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">游戏名称</span>
+                            <input type="text" class="form-control" placeholder="游戏名称" aria-describedby="basic-addon1" name="game_name">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">游戏版本</span>
+                            <input type="text" class="form-control" placeholder="游戏版本" aria-describedby="basic-addon1" name="game_version">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">上架</span>
+                            <input type="text" class="form-control" placeholder="0不上架，1上架" aria-describedby="basic-addon1" value="1" name="game_active">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">游戏公司</span>
+                            <input type="text" class="form-control" placeholder="游戏公司" aria-describedby="basic-addon1" name="game_cmp">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="checkbox" id="game_cls_check">
+                            <label>
+                                <input type="checkbox"  value="1" >单机
+                            </label>
+                            <label>
+                                <input type="checkbox"  value="2">网游
+                            </label>
+                            <label>
+                                <input type="checkbox"  value="3">应用
+                            </label>
+                            <!--<label>-->
+                                <!--<input type="checkbox"  value="4">动作-->
+                            <!--</label>-->
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-xs-12">
+                            <div class="input-group-btn">
+                                <select name="type" class="form-control" style="width: auto;" id="choose_sys" name="sys">
+                                    <option value="2">Android</option>
+                                    <option value="1">iOS</option>
+                                </select>
+                            </div>
+                            <input type="text" name="keyword" id="sys_text" class="form-control" placeholder="输入游戏安装后的包名(游戏商提供)">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">游戏icon(单张)：</span>
+                            <input id="game_icon" name="icon" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true" placeholder="">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">游戏头图(单张)：</span>
+                            <input id="title_img" name="title_img" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <div class="img_tip">游戏截图(最少3张，最多8张，按住shift或ctrl多选)：</div>
+                            <input id="game_img_list" name="" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group" id="form_pack" >
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <div class="img_tip">游戏包(iOS不需要传；Android后缀名为.apk)：</div>
+                            <input id="game_pack" name="" type="file">
+                        </div>
+                    </div>
+                    <div class="input-group col-lg-12" style="padding: 10px 0">
+                        <span class="input-group-addon">游戏简介</span>
+                        <input type="text" class="form-control" placeholder="游戏简介，建议字数控制在10以内" aria-describedby="basic-addon1"  name="game_one" >
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>游戏介绍：</label>
+                        <textarea class="form-control" rows="3" name="game_msg" placeholder="填写游戏简介"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>更新说明：</label>
+                        <textarea class="form-control" rows="3" name="update_msg" placeholder="填写更新信息"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="alert alert-warning hidden" id="err_alert">
+                <a href="#" class="close" data-dismiss="alert">
+                    &times;
+                </a>
+                <strong>错误！</strong>有未填项。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="add_game_btn">
+                    提交
+                </button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<table class="table table-bordered " id="game_table">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>游戏名</th>
+            <th>游戏ID</th>
+            <th>上架</th>
+            <th>分类</th>
+            <th>系统</th>
+            <th>添加时间</th>
+            <th>游戏公司</th>
+            <th>游戏版本</th>
+            <th>下载数</th>
+            <th>游戏大小</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <!--<tr>-->
+        <!--<td>1</td>-->
+        <!--<td class="tb_game_name">游戏名</td>-->
+        <!--<td class="tb_game_id">游戏ID</td>-->
+        <!--<td class="">上架</td>-->
+        <!--<td class="">分类</td>-->
+        <!--<td class="">系统</td>-->
+        <!--<td class="">评分</td>-->
+        <!--<td class="">游戏公司</td>-->
+        <!--<td class="">游戏版本</td>-->
+        <!--<td class="">下载数</td>-->
+        <!--<td class="">游戏大小</td>-->
+        <!--<td>-->
+            <!--<button type="button" class="btn btn-primary edit_game" >编辑</button>-->
+            <!--<button type="button" class="btn btn-danger delete_game" >删除</button>-->
+        <!--</td>-->
+    <!--</tr>-->
+</table>
+
+<div id="alert" class="hidden">
+    <div id="alert_text">上传中请等待...</div>
+</div>
+<div class="ui_flex_wrapper foot">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_game_model">添加</button>
+    <ul class="pagination" style="">
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>
+
+<div class="modal fade" id="edit_msg_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    编辑信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="bs-example bs-example-form" role="form">
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏名</span>
+                        <input type="text" class="form-control " placeholder="输入名字" id="ed_name">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">上架</span>
+                        <input type="text" class="form-control " placeholder="输入是否上架，1上架，0下架" id="ed_activation">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏公司</span>
+                        <input type="text" class="form-control " placeholder="输入游戏公司" id="ed_company">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">游戏版本</span>
+                        <input type="text" class="form-control " placeholder="输入游戏版本" id="ed_version">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏下载数</span>
+                        <input type="text" class="form-control " placeholder="输入游戏下载数" id="ed_download_num">
+                    </div>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="edit_choose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    选择要编辑的信息
+                </h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="edit_msg_btn">
+                    编辑信息
+                </button>
+                <button type="button" class="btn btn-primary" id="edit_file_btn">
+                    编辑图片&游戏包
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script src="../js/game/game.js"></script>
+</body>
+</html>

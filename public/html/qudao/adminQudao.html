@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>clsActive</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style>
+        /*.list-inline>li{*/
+            /*width: 15%;*/
+        /*}*/
+        body{
+            padding: 15px;
+        }
+        .list-inline>li{
+            padding-left: 60px;
+            position: relative;
+        }
+        li:before{
+            content: attr(data-te);
+            width: 60px;
+            height: 34px;
+            line-height: 34px;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+    <script src="../../js/public.js"></script>
+</head>
+<body>
+<div>
+    <h4></h4>
+    <ul class="list-inline">
+
+
+        <li class="col-lg-2 ui_flex_wrapper" style="margin-right: 30px" data-te="类型">
+            <select class="form-control" id="type_select">
+                <option value="" disabled  selected="selected"  style='display:none;'>请选择查看类型</option>
+                <option value="1">渠道数据</option>
+                <option value="2">点击量</option>
+            </select>
+        </li>
+        <li class="col-lg-2" style="margin-right: 30px" data-te="渠道" id="qd_li">
+            <select class="form-control" id="qudao_select">
+                <!--<option value=""></option>-->
+            </select>
+        </li>
+        <li class="col-lg-2 hidden" style="margin-right: 30px" data-te="二维码" id="er_li">
+            <select class="form-control" id="qudao_select_er">
+                <option value="" disabled  selected="selected"  style='display:none;'>请选择二维码对应渠道</option>
+                <option value="1">渠道1</option>
+                <option value="2">渠道2</option>
+                <option value="3">渠道3</option>
+                <option value="4">渠道4</option>
+                <option value="5">渠道5</option>
+                <option value="6">渠道6</option>
+                <option value="7">渠道7</option>
+                <option value="8">渠道8</option>
+                <option value="9">渠道9</option>
+                <option value="10">渠道10</option>
+                <option value="11">渠道11</option>
+                <option value="12">渠道12</option>
+                <option value="13">渠道13</option>
+                <option value="14">渠道14</option>
+                <option value="15">渠道15</option>
+                <option value="16">渠道16</option>
+                <option value="17">渠道17</option>
+                <option value="18">渠道18</option>
+                <option value="19">渠道19</option>
+                <option value="20">渠道20</option>
+                <option value="21">渠道21</option>
+                <option value="22">渠道22</option>
+                <option value="23">渠道23</option>
+                <option value="24">渠道24</option>
+                <option value="25">渠道25</option>
+                <option value="26">渠道26</option>
+                <option value="27">渠道27</option>
+                <option value="28">渠道28</option>
+                <option value="29">渠道29</option>
+                <option value="30">渠道30</option>
+                <option value="31">渠道31</option>
+                <option value="32">渠道32</option>
+                <option value="33">渠道33</option>
+                <option value="34">渠道34</option>
+                <option value="35">渠道35</option>
+                <option value="36">渠道36</option>
+                <option value="37">渠道37</option>
+                <option value="38">渠道38</option>
+                <option value="39">渠道39</option>
+                <option value="40">渠道40</option>
+                <option value="41">渠道41</option>
+                <option value="42">渠道42</option>
+                <option value="43">渠道43</option>
+                <option value="44">渠道44</option>
+                <option value="45">渠道45</option>
+                <option value="46">渠道46</option>
+                <option value="47">渠道47</option>
+                <option value="48">渠道48</option>
+                <option value="49">渠道49</option>
+                <option value="50">渠道50</option>
+                <option value="51">渠道51</option>
+                <option value="52">渠道52</option>
+                <option value="53">渠道53</option>
+                <option value="54">渠道54</option>
+                <option value="55">渠道55</option>
+                <option value="56">渠道56</option>
+                <option value="57">渠道57</option>
+                <option value="58">渠道58</option>
+                <option value="59">渠道59</option>
+                <option value="60">渠道60</option>
+                <option value="61">渠道61</option>
+                <option value="62">渠道62</option>
+                <option value="63">渠道63</option>
+                <option value="64">渠道64</option>
+                <option value="65">渠道65</option>
+                <option value="66">渠道66</option>
+                <option value="67">渠道67</option>
+                <option value="68">渠道68</option>
+                <option value="69">渠道69</option>
+            </select>
+        </li>
+        <input type="date" id="startTime">至
+        <input type="date" id="endTime">
+        <li>
+            <button type="button" class="btn btn-primary edit"   id="search">查询</button>
+        </li>
+    </ul>
+</div>
+<table class="table table-bordered table-hover hidden" id="qudao_table">
+    <thead>
+    <tr>
+        <th>日期</th>
+        <th>新增用户数</th>
+        <th>活跃用户数</th>
+        <th>总流水(单位：元)</th>
+        <th>最终收益(单位：元)</th>
+    </tr>
+    </thead>
+    <tbody id="qd_show_tb">
+    <!--<tr>-->
+        <!--<td>2018-02-07</td>-->
+        <!--<td>100</td>-->
+        <!--<td>0.33</td>-->
+        <!--<td>1230.33</td>-->
+        <!--<td>1254.33</td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+<table class="table table-bordered table-hover hidden" id="click_table">
+    <thead>
+    <tr>
+        <th>日期</th>
+        <th>点击量</th>
+    </tr>
+    </thead>
+    <tbody id="qd_click_tb">
+    <!--<tr>-->
+    <!--<td>2018-02-07</td>-->
+    <!--<td>100</td>-->
+    <!--<td>0.33</td>-->
+    <!--<td>1230.33</td>-->
+    <!--<td>1254.33</td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+
+<div class="modal fade" id="add_qudao_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    添加渠道数据
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="bs-example bs-example-form" role="form" id="edit_game_msg_form">
+
+                    <div class="input-group">
+                        <select class="form-control" id="add_qudao_select">
+                            <!--<option value=""></option>-->
+                        </select>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" >日期</span>
+                        <input type="date" id="add_qudao_date">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">新增用户数</span>
+                        <input type="number" class="form-control " placeholder="输入新增用户数" id="add_qudao_new" name="company">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">活跃用户数</span>
+                        <input type="number" class="form-control " placeholder="输入活跃用户数" id="add_qudao_active" name="version">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">总流水</span>
+                        <input type="number" class="form-control " placeholder="总流水" id="add_qudao_current" name="download_num">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">最终收益</span>
+                        <input type="number" class="form-control " placeholder="最终收益" id="add_qudao_income" name="sort">
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="add_qudao_btn">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="ui_flex_wrapper ">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_qudao_model" style="position: absolute;bottom: 20px;left: 20px">添加</button>
+</div>
+
+
+<script src="../../js/qudao/adminQudao.js"></script>
+</body>
+</html>

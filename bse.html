@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>canvas直线</title>
+    <meta name="Keywords" content="">
+    <meta name="author" content="@my_programmer">
+    <style type="text/css">
+        body, h1{margin:0;}
+        canvas{margin: 20px;}
+    </style>
+    <script src="app.js"></script>
+</head>
+<body>
+<h1>二次贝塞尔曲线</h1>
+<canvas id="canvas" width=200 height=200 style="border: 1px solid #ccc;"></canvas>
+<script>
+    function draw(startX,startY,controlX,controlY,endX,endY) {
+        var canvas=document.getElementById('canvas');
+        var context=canvas.getContext('2d');
+        context.beginPath();
+        context.moveTo(startX,startY);
+        context.quadraticCurveTo(controlX,controlY,endX,endY);
+        context.strokeStyle = "red";
+        context.stroke();
+    }
+    draw(0,200,130,80,200,200)
+</script>
+</body>
+</html>

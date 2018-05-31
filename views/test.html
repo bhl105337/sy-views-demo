@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+<!--<form id="myform" >-->
+
+    <!--<input accept="image/*" type="file" class="photo" name="image">-->
+
+<!--</form>-->
+
+<form enctype='multipart/form-data' id="uploadForm"  >
+
+    <input type="text" name="api_key" value="_E5ZVwo7kGNQvLKl1uYGfb1xfnaNwOIm">
+
+    <input type="text" name="api_secret" value="N5QPI9e5g8LlL9T3JSYvwpJA6aUyIxAp">
+    <input type="file" id="inp" name="">
+
+</form>
+<!--<iframe id="myFrame" name="nm_iframe" style=";"></iframe>-->
+<script type="text/javascript" src="jquery-3.0.0.min.js"></script>
+
+<script>
+
+ $(function () {
+     $('#inp').change(function () {
+         var formData = new FormData($( "#uploadForm" )[0]);
+         $.ajax({
+             type:'post',
+             url:'https://api.faceid.com/faceid/v1/ocridcard',
+             data:formData,
+             async: true,
+             cache: false,
+             contentType: false,
+             processData: false,
+             success:function (data) {
+                 console.log(data);
+             },
+             error: function (returndata) {
+                 console.log((returndata));
+             }
+         })
+     })
+ })
+</script>
+</body>
+</html>

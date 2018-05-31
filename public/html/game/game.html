@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>game</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/game/game.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/fileinput.min.js"  charset="UTF-8"></script>
+    <script src="../../js/public.js"  charset="UTF-8"></script>
+
+    <style>
+        .pagination>button{
+            padding: 10px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            margin: 3px;
+        }
+        .pagination>.active{
+            /*background-color: white;*/
+            border: 1px solid deepskyblue;
+        }
+        #game_table{
+            height: auto;
+        }
+        #game_table td,#game_table tr{
+            height: 25px;
+            line-height: 25px;
+        }
+        #edit_game_pack_btn::after{
+            content: attr(data-re);
+            height: 20px;
+            width: 40px;
+            display: inline-block;
+            /*background-color: red;*/
+            position: relative;
+            right: -60px;
+            border-radius: 3px;
+            line-height: 20px;
+            color: black;
+        }
+    </style>
+    <script src="../../js/qiniu.min.js" charset="UTF-8"></script>
+</head>
+<body>
+
+<div class="head ui_flex_wrapper ui_flex_h">
+    <div>
+        <form class="bs-example bs-example-form" role="form">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="search_input">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1" id="search_text">名称<span class="caret"></span></button>
+
+                            <ul class="dropdown-menu" id="search_cls">
+                                <li>
+                                    <a href="#">ID</a>
+                                </li>
+                                <li>
+                                    <a href="#">名称</a>
+                                </li>
+                                <li>
+                                    <a href="#">分类</a>
+                                </li>
+                                <li>
+                                    <a href="#">上架</a>
+                                </li>
+                                <li>
+                                    <a href="#">系统</a>
+                                </li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <span class="input-group-btn">
+						<button class="btn btn-default" type="button" id="search_btn">
+							Search
+						</button>
+					</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade " id="add_game_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加游戏
+                </h4>
+            </div>
+            <div class="modal-body" id="add_game_mb">
+                <form role="form" id="add_game_form">
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">游戏名称</span>
+                            <input type="text" class="form-control" placeholder="游戏名称" aria-describedby="basic-addon1" name="game_name" id="gameName">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">游戏版本</span>
+                            <input type="text" class="form-control" placeholder="游戏版本" aria-describedby="basic-addon1" name="game_version" id="gameVersion">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <!--<div class="input-group col-lg-6">-->
+                        <!--<span class="input-group-addon">上架</span>-->
+                        <!--<input type="text" class="form-control" placeholder="0不上架，1上架" aria-describedby="basic-addon1" value="1" name="game_active" >-->
+                        <!--</div>-->
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">游戏公司</span>
+                            <input type="text" class="form-control" placeholder="游戏公司" aria-describedby="basic-addon1" name="game_cmp" id="gameCompany">
+                        </div>
+                    </div>
+                    <div style="padding: 10px 0" id="type_radio">
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="alone" checked> 单机
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadiosinline" id="optionsRadios4"  value="online"> 网游
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadiosinline" id="optionsRadios5"  value="application"> 应用
+                        </label>
+                    </div>
+                    <div style="padding:0 0 10px 0">
+                        <div id="alone" class="type_checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="1"> 射击
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="2"> 经营养成
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="3"> 棋牌
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="4"> 策略
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="5"> 动作
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="6"> 角色扮演
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="7"> 益智
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="8"> 休闲
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="18"> 模拟
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="19"> 街机
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="20"> 竞技
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="21"> 音乐
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="9"> 其他游戏
+                            </label>
+                        </div>
+                        <div id="online" class="hidden type_checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="7"> 益智
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="6"> 角色扮演
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="3"> 棋牌
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="1"> 射击
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="8"> 休闲
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="2"> 经营养成
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="9"> 其他游戏
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="4"> 策略
+                            </label>
+                        </div>
+                        <div id="application" class="hidden type_checkbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="10"> 网上购物
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="11"> 影音图像
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="12"> 实用工具
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="13"> 商务办公
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="14"> 社交通讯
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="15"> 生活服务
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="16"> 运动健康
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="17"> 资讯阅读
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="22"> 金融理财
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="23"> 学习教育
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  value="24"> 交通导航
+                            </label>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-xs-12">
+                            <div class="input-group-btn">
+                                <select name="type" class="form-control" style="width: auto;" id="choose_sys" name="sys">
+                                    <option value="2">Android</option>
+                                    <option value="1">iOS</option>
+                                </select>
+                            </div>
+                            <input type="text" name="gamePackagename" id="sys_text" class="form-control" placeholder="输入游戏安装后的包名(游戏商提供)">
+                        </div>
+                    </div>
+                    <!--<div class="row ui_flex_wrapper ui_flex_h form-group">-->
+                    <!--<div class="form-group title_img ui_flex_wrapper ui_flex_v">-->
+                    <!--<span class="img_tip">游戏icon(单张，192*192以上)：</span>-->
+                    <!--<input id="game_icon" name="icon" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true" placeholder="">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row ui_flex_wrapper ui_flex_h form-group">-->
+                    <!--<div class="form-group title_img ui_flex_wrapper ui_flex_v">-->
+                    <!--<span class="img_tip">游戏头图(单张，1280*720以上)：</span>-->
+                    <!--<input id="title_img" name="title_img" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row ui_flex_wrapper ui_flex_h form-group">-->
+                    <!--<div class="form-group title_img ui_flex_wrapper ui_flex_v">-->
+                    <!--<div class="img_tip">游戏截图(最少3张，最多8张，按住shift或ctrl多选，横竖图不限制)：</div>-->
+                    <!--<input id="game_img_list" name="" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row ui_flex_wrapper ui_flex_h form-group" id="form_pack" >-->
+                    <!--<div class="form-group title_img ui_flex_wrapper ui_flex_v">-->
+                    <!--<div class="img_tip">游戏包(iOS不需要传；Android后缀名为.apk)：</div>-->
+                    <!--<input id="game_pack" name="" type="file">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <div class="input-group col-lg-12" style="padding: 10px 0">
+                        <span class="input-group-addon">游戏简介</span>
+                        <input type="text" class="form-control" placeholder="游戏简介，建议字数控制在10以内" aria-describedby="basic-addon1"  name="game_one" >
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>游戏介绍：</label>
+                        <textarea class="form-control" rows="3" name="game_msg" placeholder="填写游戏简介"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>更新说明：</label>
+                        <textarea class="form-control" rows="3" name="update_msg" placeholder="填写更新信息"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="alert alert-warning hidden" id="err_alert">
+                <a href="#" class="close" data-dismiss="alert">
+                    &times;
+                </a>
+                <strong>错误！</strong>有未填项。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="add_game_btn">
+                    提交
+                </button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<table class="table table-bordered table-hover" >
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>游戏名</th>
+        <th>游戏ID</th>
+        <th>上架</th>
+        <th>分类</th>
+        <th>系统</th>
+        <th>添加时间</th>
+        <th>游戏公司</th>
+        <th>游戏版本</th>
+        <th>下载数</th>
+        <th>游戏大小</th>
+        <th>首页排序</th>
+        <th>热玩排序</th>
+        <th>管理员</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="game_table">
+
+    </tbody>
+    <!--<tr>-->
+    <!--<td>1</td>-->
+    <!--<td class="tb_game_name">游戏名</td>-->
+    <!--<td class="tb_game_id">游戏ID</td>-->
+    <!--<td class="">上架</td>-->
+    <!--<td class="">分类</td>-->
+    <!--<td class="">系统</td>-->
+    <!--<td class="">评分</td>-->
+    <!--<td class="">游戏公司</td>-->
+    <!--<td class="">游戏版本</td>-->
+    <!--<td class="">下载数</td>-->
+    <!--<td class="">游戏大小</td>-->
+    <!--<td>-->
+    <!--<button type="button" class="btn btn-primary edit_game" >编辑</button>-->
+    <!--<button type="button" class="btn btn-danger delete_game" >删除</button>-->
+    <!--</td>-->
+    <!--</tr>-->
+</table>
+
+<div class="ui_flex_wrapper foot">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_game_model" >添加</button>
+    <ul class="pagination" style="">
+        <!--<li><a href="#">&laquo;</a></li>-->
+        <!--<li><a href="#">1</a></li>-->
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <!--<li><a href="#">&raquo;</a></li>-->
+        <input type="number" id="choPage">
+        <button id="choPageBtn">跳转</button>
+        <span id="allPageNum"></span>
+    </ul>
+
+</div>
+
+<div class="modal fade" id="edit_msg_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    编辑信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="bs-example bs-example-form" role="form" id="edit_game_msg_form">
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏名</span>
+                        <input type="text" class="form-control " placeholder="输入名字" id="ed_name" name="name">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">上架</span>
+                        <input type="text" class="form-control " placeholder="输入是否上架，1上架，0下架" id="ed_activation" name="activation">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏公司</span>
+                        <input type="text" class="form-control " placeholder="输入游戏公司" id="ed_company" name="company">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">游戏版本</span>
+                        <input type="text" class="form-control " placeholder="输入游戏版本" id="ed_version" name="version">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏下载数</span>
+                        <input type="text" class="form-control " placeholder="输入游戏下载数" id="ed_download_num" name="download_num">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">首页优先级</span>
+                        <input type="text" class="form-control " placeholder="数字越大越优先，勿输入数字之外的字符" id="ed_sort" name="sort">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">热玩优先级</span>
+                        <input type="text" class="form-control " placeholder="数字越大越优先，勿输入数字之外的字符" id="ed_sort2" name="sort2">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">游戏大小</span>
+                        <input type="text" class="form-control " placeholder="输入游戏大小" id="ed_size" name="size">
+                    </div>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="edit_game_msg_btn">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="edit_choose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    选择要编辑的信息
+                </h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="edit_msg_btn">
+                    编辑信息
+                </button>
+                <button type="button" class="btn btn-primary" id="edit_file_btn">
+                    编辑图片&游戏包
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="edit_file_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    <div id="edit_game_name" data-id=""></div>
+                    传游戏图片或者安装包（图片和包请分开传，防止传输出错）
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ui_flex_wrapper ui_flex_h form-group">
+                    <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                        <span class="img_tip">游戏icon(单张，192*192以上)：</span>
+                        <input id="game_icon" name="icon" type="file" multiple  class="file"  data-show-upload="false"  placeholder="">
+                        <!--data-show-caption="true"-->
+                    </div>
+                </div>
+                <div class="row ui_flex_wrapper ui_flex_h form-group">
+                    <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                        <span class="img_tip">游戏头图(单张，1280*720以上)：</span>
+                        <input id="title_img" name="title_img" type="file" multiple  class="file"  data-show-upload="false" >
+                    </div>
+                </div>
+                <div class="row ui_flex_wrapper ui_flex_h form-group">
+                    <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                        <div class="img_tip">游戏截图(最少3张，最多8张，按住shift或ctrl多选，横竖图不限制)：</div>
+                        <input id="game_img_list" name="" type="file" multiple  class="file"  data-show-upload="false" >
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="edit_game_img_btn">
+                    提交图片
+                </button>
+                <br>
+                <hr>
+                <div class="row ui_flex_wrapper ui_flex_h form-group" id="form_pack" >
+                    <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                        <div class="img_tip">游戏包(iOS不需要传；Android后缀名为.apk)：</div>
+                        <input id="game_pack" name="" type="file">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="edit_game_pack_btn" data-re="">
+                    提交游戏包
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <!--<button type="button" class="btn btn-primary" id="edit_game_btn">-->
+                <!--提交更改-->
+                <!--</button>-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="tag_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" >添加游戏</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="tag_from">
+                    <div class="col-lg-4  row">
+                        <input type="text" class="form-control" id="subject_name_inp">
+                    </div>
+                    <div class="col-lg-4  row">
+                        <select name="game_id" id="tag_game_select" class="form-control">
+                            <!--<option value="0" selected="selected"></option>-->
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add_tag_btn">添加</button>
+                </form>
+                <br>
+                <table class="table table-bordered table-hover" id="subject_game_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标签</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tag_game" >
+
+                    <!--<tr>-->
+                    <!--<td>序号</td>-->
+                    <!--<td>游戏名</td>-->
+                    <!--<td>名称</td>-->
+                    <!--<td> <button type="button" class="btn btn-danger" >移除</button></td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <!--<button type="button" class="btn btn-primary" >提交更改</button>-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script src="../../js/game/game.js"  charset="UTF-8"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../public/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<button id="aaa">点击添加对象<tton>
+</body>
+<script src="js/jquery-2.0.3.min.js"></script>
+<script>
+    var arr=[];
+    $("#aaa").click(function () {
+            var flag=false;
+            $.each(arr,function(index,value){
+                (value.num == 2)&& (flag=true,value['endtime']=5);
+            });
+            flag||arr.push({price: "1",num: "2",name: "3",statime:"4"});
+            console.log(arr)
+    })
+</script>
+<html>

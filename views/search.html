@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>找人</title>
+    <style>
+        .button{
+            width: 531px;
+            margin: 10px auto;
+        }
+        table{
+            border-collapse: collapse;
+            /*width: 531px;*/
+            margin: 0 auto;
+        }
+        td{
+            width: 50px;
+            height: 50px;
+            border:1px solid orange;
+        }
+        td.start{
+            /*background: url(img/bg_userDragon.png) no-repeat center center;*/
+            /*background-size: 100% 100%;*/
+            background-color: red;
+        }
+        td.end{
+           background-color: rebeccapurple;
+        }
+        td.current{
+            background: skyblue;
+        }
+        td.path{
+           background-color: black;
+        }
+        td.block{
+           background-color: goldenrod;
+        }
+    </style>
+    <script src="../public/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div class="button">
+    <button onclick="javascript:console.time('耗费时间');searchRoad();console.timeEnd('耗费时间');">开始找人</button>
+</div>
+<script type="text/javascript">
+    var rows = 30,cols =30;
+    var map = multiArray(rows,cols);
+    var start = {
+        x: 1,
+        y: 1
+    };
+    var end = {
+        x: 21,
+        y: 16
+    };
+    var table = document.createElement("table");
+    document.body.appendChild(table);
+    for(var i=0,l=map.length;i<l;i++){
+        var tr = document.createElement("tr");
+        table.appendChild(tr);
+        for(var j=0;j<map[i].length;j++){
+            var td = document.createElement("td");
+            tr.appendChild(td)
+            if(i==start.y && j==start.x){
+                td.className = "start";
+            }
+            if(i==end.y && j==end.x){
+                td.className = "end";
+            }
+            (function(i,j){
+                td.onclick = function(){
+                    var classname =  $("table").find("tr").eq(i).find("td").eq(j)
+                    if(classname.attr('class')  == undefined){
+                        classname.addClass("block")
+                        map[i][j] = -3;
+                    }
+                }
+            })(i,j);
+        }
+
+    }
+
+    function multiArray(rows,cols){
+        var a = new Array(rows);
+        for(var i=0;i<rows;i++){
+            a[i] = new Array(cols);
+            for(var j=0;j<rows;j++){
+                a[i][j] = j;
+            }
+        }
+        return a;
+    }
+
+    function searchRoad() {
+        var openList = [],
+            closeList = [],
+            result = [],
+            result_index;
+        openList.push({
+            x: 1,
+            y: 1,
+            G: 0
+        });
+        do{
+            var currentPoint = openList.pop();
+            closeList.push(currentPoint);
+            var sourroundPoint = getSurroundPoint(currentPoint);
+            for(var i in sourroundPoint) {
+                var item = sourroundPoint[i];
+                if (
+                    item.x >= 0 &&
+                    item.x < cols &&
+                    item.y >= 0 &&
+                    item.y < rows&&
+                    map[item.x][item.y] != -3&&
+                    !existList(item, closeList)
+                ) {
+                    // var g = ((item.x - currentPoint.x) * (item.y - currentPoint.y) === 0 ? 10 : 14);
+                    if (!existList(item, openList)) {
+                        item['H'] = Math.abs(end.x - item.x) * 10 + Math.abs(end.y - item.y) * 10;
+                        item['G'] = 10;
+                        item['F'] = item.G + item.H;
+                        item['parent'] = currentPoint;
+                        openList.push(item);
+                    }
+                }
+            }
+            if (openList.length === 0) {
+                console.log('没有可用路径');
+                break;
+            }
+            openList.sort(sortF);
+        }while (!(result_index=existList({x: end.x, y: end.y}, openList)))
+
+        if (result_index) {
+            var currentObj = openList[result_index];
+            while(currentObj.x !== start.x || currentObj.y != start.y){
+                result.unshift({
+                    x: currentObj.x,
+                    y: currentObj.y
+                });
+                currentObj = currentObj.parent;
+            };
+        }
+
+        for(var i=0;i<result.length;i++){
+            if(result[i].x == end.x && result[i].y == end.y)continue;
+            $("table").find("tr").eq(result[i].x).find("td").eq(result[i].y).addClass("path")
+        }
+        return result;
+    }
+    function sortF(a,b){
+        return b.F- a.F;
+    }
+    function getSurroundPoint(currentPoint) {
+        var x = currentPoint.x, y = currentPoint.y;
+        return [
+            {x:x,y:y-1},
+            {x:x,y:y+1},
+            {x:x+1,y:y},
+            {x:x-1,y:y}
+        ];
+    }
+    function existList(point,list) {
+        for(var i in list) {
+            if(point.x==list[i].x && point.y==list[i].y) {
+                return i;
+            }
+        }
+        return false;
+    }
+
+</script>
+</body>
+</html>

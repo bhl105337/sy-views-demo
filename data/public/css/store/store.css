@@ -1,0 +1,13 @@
+.input-group[class*=col-] {
+    padding: 5px 10px;
+}
+.form-group {
+     padding: 0 10px;
+}
+select{
+    width: 100px;
+}
+.delete_type{
+    margin: 5px;
+}
+

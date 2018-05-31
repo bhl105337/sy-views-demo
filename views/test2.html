@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="../public/js/jquery-3.2.1.min.js"></script>
+    <script src="../public/js/qiniu.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+</head>
+<style>
+
+</style>
+<body>
+<table>
+    <td align="left" id="bannerTd">
+        <input type="file" id="uploadFile">
+    </td>
+
+</table>
+<div style="box-shadow: 1px 1px 3px rgba(0,0,0,0.1);width: 100px;height: 100px"></div>
+</body>
+<script>
+    var socket = io.connect('http://127.0.0.1:8877');
+    socket.emit('sendMsg', { userId: 1,msg:'23223'});
+    socket.on('event01', function (data) {
+
+        console.log(data+1111111);
+
+//        socket.emit('event02', { my: 'data client' });
+
+    });
+    var config={
+        ip:"http://127.0.0.1:8878",
+        img:"http://oneyouxiimg.oneyouxi.com.cn",
+        base64:"http://base64.oneyouxi.com.cn"
+    };
+    $(function () {
+//       function uploadQiniu(file, key,token,nextCb,errorCb,completeCb) {
+//           var next=function (res) {
+//               nextCb(res);
+//           };
+//           var error = function (err) {
+//               errorCb(res);
+//           };
+//           var complete = function (res) {
+//               completeCb(res);
+//           };
+//           var putExtra = {
+//               fname: "",
+//               params: {},
+//               mimeType:null
+//           };
+//           var config = {
+//               useCdnDomain: true,
+//               region:'z2',
+//               disableStatisticsReport: false
+//           };
+//           var subObject = {
+//               next: next,
+//               error: error,
+//               complete: complete
+//           };
+//           var observable = qiniu.upload(file, key, token, putExtra, config);
+//           var subscription = observable.subscribe(subObject) // 上传开始
+//       }
+
+
+        /**
+         *                             _ooOoo_
+         *                            o8888888o
+         *                            88" . "88
+         *                            (| -_- |)
+         *                            O\  =  /O
+         *                         ____/`---'\____
+         *                       .'  \\|     |//  `.
+         *                      /  \\|||  :  |||//  \
+         *                     /  _||||| -:- |||||-  \
+         *                     |   | \\\  -  /// |   |
+         *                     | \_|  ''\---/''  |   |
+         *                     \  .-\__  `-`  ___/-. /
+         *                   ___`. .'  /--.--\  `. . __
+         *                ."" '<  `.___\_<|>_/___.'  >'"".
+         *               | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+         *               \  \ `-.   \_ __\ /__ _/   .-` /  /
+         *          ======`-.____`-.___\_____/___.-`____.-'======
+         *                             `=---='
+         *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         *             佛祖保佑        永无BUG        永不修改
+         *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         *
+         *          =====================================================
+         */
+
+        function uploadQiniu(options) {
+            /*
+            option:{
+                 file:octet-stream
+                 key:string
+                 token:string
+                 next:fn
+                 error:fn
+                 success:fn
+            }
+             */
+            var file=options.file || null,
+                key=options.key || null,
+                token=options.token || null,
+                next=options.next || null,
+                error=options.error || null,
+                success=options.success || null,
+                putExtra = {
+                    fname: "",
+                    params: {},
+                    mimeType:null
+                },
+                config = {
+                    useCdnDomain: true,
+                    region:'z2',
+                    disableStatisticsReport: false
+                },
+                subObject = {
+                    next: next,
+                    error: error,
+                    complete: success
+                },
+                observable = qiniu.upload(file, key, token, putExtra, config);
+            subscription = observable.subscribe(subObject) // 上传开始
+        }
+
+
+        $("#uploadFile").change(function () {
+            var file = this.files[0];
+            var key='test';
+            $.ajax({
+                url: config.ip+'/admin/getUptokenByMsg',
+                data:{scope:'oneyouxiimg',key:key},
+                type:'get',
+                success:function (data) {
+                    uploadQiniu({
+                        file:file,
+                        key:key,
+                        token:data.upToken,
+                        next:function (res) {
+                            console.log(res.total.percent.toFixed(1)+'%');
+                        },
+                        error:function (error) {
+                            console.log('error:'+error);
+                        },
+                        success:function (res) {
+                            console.log(res.key,(res.fsize/1024/1024).toFixed(1));
+                        }
+                    });
+                }
+            })
+        });
+    });
+    var Base64 = {
+
+        // private property
+        _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+        // public method for encoding
+        encode: function(input) {
+            var output = "";
+            var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+            var i = 0;
+            input = Base64._utf8_encode(input);
+            while (i < input.length) {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
+                output = output + this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) + this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+            }
+            return output;
+        },
+
+        // public method for decoding
+        decode: function(input) {
+            var output = "";
+            var chr1, chr2, chr3;
+            var enc1, enc2, enc3, enc4;
+            var i = 0;
+            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+            while (i < input.length) {
+                enc1 = this._keyStr.indexOf(input.charAt(i++));
+                enc2 = this._keyStr.indexOf(input.charAt(i++));
+                enc3 = this._keyStr.indexOf(input.charAt(i++));
+                enc4 = this._keyStr.indexOf(input.charAt(i++));
+                chr1 = (enc1 << 2) | (enc2 >> 4);
+                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                chr3 = ((enc3 & 3) << 6) | enc4;
+                output = output + String.fromCharCode(chr1);
+                if (enc3 != 64) {
+                    output = output + String.fromCharCode(chr2);
+                }
+                if (enc4 != 64) {
+                    output = output + String.fromCharCode(chr3);
+                }
+
+            }
+
+            output = Base64._utf8_decode(output);
+
+            return output;
+
+        },
+
+        // private method for UTF-8 encoding
+        _utf8_encode: function(string) {
+            string = string.replace(/\r\n/g, "\n");
+            var utftext = "";
+
+            for (var n = 0; n < string.length; n++) {
+                var c = string.charCodeAt(n);
+                if (c < 128) {
+                    utftext += String.fromCharCode(c);
+                } else if ((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                } else {
+                    utftext += String.fromCharCode((c >> 12) | 224);
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }
+
+            }
+            return utftext;
+        },
+
+        // private method for UTF-8 decoding
+        _utf8_decode: function(utftext) {
+            var string = "";
+            var i = 0;
+            var c = c1 = c2 = 0;
+            while (i < utftext.length) {
+                c = utftext.charCodeAt(i);
+                if (c < 128) {
+                    string += String.fromCharCode(c);
+                    i++;
+                } else if ((c > 191) && (c < 224)) {
+                    c2 = utftext.charCodeAt(i + 1);
+                    string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                    i += 2;
+                } else {
+                    c2 = utftext.charCodeAt(i + 1);
+                    c3 = utftext.charCodeAt(i + 2);
+                    string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                    i += 3;
+                }
+            }
+            return string;
+        }
+    }
+    console.log(Base64.encode(Base64._utf8_encode('带带大师兄')));
+    var conten={
+        0:{'name': "入住人甲", 'sex': "0", 'id_card': "4554545544554", 'room_num': "1011"},
+        1:{'name': "入住人乙", 'sex': "0", 'id_card': "4554545544554", 'room_num': "1011"},
+        2:{'name': "入住人丙", 'sex': "0", 'id_card': "4554545544554", 'room_num': "1011"},
+        3:{'name': "入住人丁", 'sex': "0", 'id_card': "4554545544554", 'room_num': "1012"},
+        4:{'name': "入住人午", 'sex': "0", 'id_card': "4554545544554", 'room_num': "1012"}
+    };
+    var obj={};
+    for (key in conten){
+        obj[conten[key].room_num] ? obj[conten[key].room_num].push(conten[key]) : obj[conten[key].room_num] = [conten[key]]
+    }
+    console.log(obj);
+
+
+    function fn(arr) {
+        var index=0;
+        while (arr[arr[index]]){
+            index += arr[arr[index]];
+            if(index==arr.length){
+                return true
+            }else if(index>arr.length){
+                return false
+            }
+        }
+        return false
+    };
+
+
+
+    //    function asyncThing1(){
+    //        var dfd = $.Deferred();
+    //        setTimeout(function(){
+    //            log('asyncThing1 seems to be done...');
+    //            dfd.resolve('1111');
+    //        },1000);
+    //        return dfd.promise();
+    //    }
+    //    function asyncThing2(){
+    //        var dfd = $.Deferred();
+    //        setTimeout(function(){
+    //            log('asyncThing2 seems to be done...');
+    //            dfd.resolve('222');
+    //        },1500);
+    //        return dfd.promise();
+    //    }
+    //    function asyncThing3(){
+    //        var dfd = $.Deferred();
+    //        setTimeout(function(){
+    //            log('asyncThing3 seems to be done...');
+    //            dfd.resolve('333');
+    //        },2000);
+    //        return dfd.promise();
+    //    }
+    //    /* do it */
+    //    $.when( asyncThing1(), asyncThing2(), asyncThing3() ).done(function(res1, res2, res3){
+    //        log('all done!');
+    //        log(res1 + ', ' + res2 + ', ' + res3);
+    //    })
+
+
+
+</script>
+<html>

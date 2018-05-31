@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>store</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/store/store.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/fileinput.min.js"></script>
+    <script src="../../js/public.js"></script>
+</head>
+<body>
+<table class="table table-bordered table-hover" id="store_table">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>商品ID</th>
+        <th>商品名</th>
+        <th>原始库存</th>
+        <th>现有库存</th>
+        <th>价值</th>
+        <th>货币类型</th>
+        <th>系统</th>
+        <th>商品类型</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="t_goods">
+        <!--<tr>-->
+            <!--<td>序号</td>-->
+            <!--<td>商品名</td>-->
+            <!--<td>原始库存</td>-->
+            <!--<td>现有库存</td>-->
+            <!--<td>价值</td>-->
+            <!--<td>货币类型</td>-->
+            <!--<td>系统</td>-->
+            <!--<td>商品类型</td>-->
+            <!--<td>-->
+                <!--<button type="button" class="btn btn-primary edit_good" >编辑</button>-->
+                <!--<button type="button" class="btn btn-danger delete_good" >删除</button>-->
+            <!--</td>-->
+        <!--</tr>-->
+    </tbody>
+</table>
+<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#choose_good_type">添加商品</button>
+<!-- 模态框（Modal） -->
+<div class="modal fade bs-example-modal-lg" id="add_good" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" >添加商品</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add_good_form">
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class=" col-lg-4">
+                            <span class="">货币类型</span>
+                            <select name="coin_type"  class="selectpicker" >
+                                <option value="1">积分</option>
+                                <option value="2" selected = "selected">平台币</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-4">
+                            <span class="input-group-addon">名称</span>
+                            <input type="text" class="form-control " placeholder="商品名称*" aria-describedby="basic-addon1" name="name">
+                        </div>
+                    </div>
+                    <!--<div id="good_type_box">-->
+                        <!--<div class="row ui_flex_wrapper ui_flex_h form-group good_type">-->
+                            <!--<div class="input-group col-lg-3">-->
+                                <!--<span class="input-group-addon">规格</span>-->
+                                <!--<input type="text" class="form-control type_ipu" placeholder="商品规格*" aria-describedby="basic-addon1" name="">-->
+                            <!--</div>-->
+                            <!--<div class="input-group col-lg-3">-->
+                                <!--<span class="input-group-addon">价值</span>-->
+                                <!--<input type="number" class="form-control cost_ipu" placeholder="商品价值*(数字)" aria-describedby="basic-addon1" name="">-->
+                            <!--</div>-->
+                            <!--<div class="input-group col-lg-3">-->
+                                <!--<span class="input-group-addon">货存</span>-->
+                                <!--<input type="number" class="form-control stock_ipu" placeholder="商品货存*(数字)" aria-describedby="basic-addon1" name="">-->
+                            <!--</div>-->
+                            <!--<button type="button" class="btn btn-default delete_type " >删除规格</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<button type="button" class="btn btn-default " id="new_type">更多规格</button>-->
+                    <div class="row ui_flex_wrapper ui_flex_h form-group good_type">
+                        <div class="input-group col-lg-3">
+                            <span class="input-group-addon">价值</span>
+                            <input type="number" class="form-control cost_ipu" placeholder="商品价值*(数字)" aria-describedby="basic-addon1" name="cost">
+                        </div>
+                        <div class="input-group col-lg-3">
+                            <span class="input-group-addon">货存</span>
+                            <input type="number" class="form-control stock_ipu" placeholder="商品货存*(数字)" aria-describedby="basic-addon1" name="stock">
+                        </div>
+                        <!--<button type="button" class="btn btn-default delete_type " >删除规格</button>-->
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>详情：</label>
+                        <!--<textarea class="form-control" rows="3" name="good_detail" placeholder="填写商品详情"></textarea>-->
+                        <div id="ed">
+
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>说明：</label>
+                        <textarea class="form-control" rows="3" name="explain" placeholder="填写商品说明"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>备注：</label>
+                        <textarea class="form-control" rows="3" name="remark" placeholder="填写商品备注"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">商品图标(单张，192*192)：</span>
+                            <input id="icon" name="icon" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group  " id="good_img_box">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <div class="img_tip">商品图片(最少1张，最多5张，按住shift或ctrl多选，横图 1280*720)：</div>
+                            <input id="good_img" name="" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add_good_btn">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade bs-example-modal-lg" id="add_virtual" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" >添加商品</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add_virtual_form">
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class=" col-lg-4">
+                            <span class="">货币类型</span>
+                            <select name="coin_type"  class="selectpicker" >
+                                <option value="1">成就点</option>
+                                <option value="2" selected = "selected">平台币</option>
+                            </select>
+                        </div>
+                        <div class=" col-lg-4">
+                            <span class="">适用系统</span>
+                            <select name="sys"  class="selectpicker" >
+                                <option value="3" selected = "selected">通用</option>
+                                <option value="1">iOS</option>
+                                <option value="2" >Android</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-4">
+                            <span class="input-group-addon">名称</span>
+                            <input type="text" class="form-control " placeholder="商品名称*" aria-describedby="basic-addon1" name="name">
+                        </div>
+                    </div>
+                    <div id="virtual_type_box">
+                        <div class="row ui_flex_wrapper ui_flex_h form-group good_type">
+                            <div class="input-group col-lg-3">
+                                <span class="input-group-addon">价值</span>
+                                <input type="number" class="form-control cost_ipu" placeholder="商品价值*(数字)" aria-describedby="basic-addon1" name="cost">
+                            </div>
+                            <div class="input-group col-lg-3">
+                                <span class="input-group-addon">货存</span>
+                                <input type="number" class="form-control stock_ipu" placeholder="商品货存*(数字)" aria-describedby="basic-addon1" name="stock">
+                            </div>
+                            <!--<button type="button" class="btn btn-default delete_type " >删除规格</button>-->
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>详情：</label>
+                        <textarea class="form-control" rows="3" name="good_detail" placeholder="填写商品详情"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>说明：</label>
+                        <textarea class="form-control" rows="3" name="explain" placeholder="填写商品说明"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_v form-group padding_10">
+                        <label>备注：</label>
+                        <textarea class="form-control" rows="3" name="remark" placeholder="填写商品备注"></textarea>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">商品图标(单张，192*192)：</span>
+                            <input id="virtual_icon" name="icon" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add_virtual_btn">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade" id="show_good_type" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    商品规格
+                </h4>
+                <div class="modal-body">
+                    <table class="table table-bordered table-hover" >
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>规格</th>
+                            <th>价值</th>
+                            <th>原始库存</th>
+                            <th>现有库存</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="t_goods_type">
+                            <!--<tr>-->
+                                <!--<td>序号</td>-->
+                                <!--<td>规格</td>-->
+                                <!--<td>价值</td>-->
+                                <!--<td>原始库存</td>-->
+                                <!--<td>现有库存</td>-->
+                                <!--<td>货币类型</td>-->
+                                <!--<td>-->
+                                <!--<button type="button" class="btn btn-primary edit_good" >编辑</button>-->
+                                <!--<button type="button" class="btn btn-danger delete_good" >删除</button>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="modal fade" id="choose_good_type" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    选择商品类型
+                </h4>
+            </div>
+            <div class="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="choose_good_btn">实物商品
+                    </button>
+                    <button type="button" class="btn btn-primary"  id="choose_virtual_btn">
+                        虚拟商品
+                    </button>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript" src="../../js/wangEditor.min.js"></script>
+<script src="../../js/store/store.js"></script>
+</body>
+</html>

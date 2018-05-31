@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>news</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <style>
+        #show_news .input-group-addon:first-child {
+            min-width: 100px;
+        }
+        #show_news .modal-content{
+            width: 375px;
+        }
+        #show_news .modal-content img{
+            width: 100%;
+        }
+        #show_news .modal-body{
+            height: 667px;
+            width: 375px;
+            overflow-y: scroll;
+        }
+        #show_news .modal-body::-webkit-scrollbar{
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+    <script src="../../js/fileinput.min.js"></script>
+    <script src="../../js/public.js"></script>
+    <script src="../../js/qiniu.min.js"></script>
+</head>
+<body>
+<table class="table table-bordered table-hover" id="news_table">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>文章ID</th>
+        <th>文章标题</th>
+        <th>浏览数</th>
+        <th>点赞数</th>
+        <th>评论数</th>
+        <th>添加时间</th>
+        <th>上传者</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="t_news">
+    <!--<tr>-->
+        <!--<td>序号</td>-->
+        <!--<td>文章ID</td>-->
+        <!--<td>文章标题</td>-->
+        <!--<td>点赞数</td>-->
+        <!--<td>评论数</td>-->
+        <!--<td>添加时间</td>-->
+        <!--<td>上传者</td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+<button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#m_add_news">添加文章</button>
+<div class="modal fade bs-example-modal-lg" id="m_add_news" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加文章
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add_news_from">
+                    <div class="col-lg-2  row">
+                        <input type="text" class="form-control" id="game_name_inp">
+                    </div>
+                    <div class="col-lg-2  row">
+                        <select name="game_id" id="news_game_select" class="form-control">
+                            <!--<option value="0" selected="selected"></option>-->
+                        </select>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-10" style="padding: 0 10px;">
+                            <span class="input-group-addon">文章标题</span>
+                            <input type="text" class="form-control " placeholder="文章标题（不超过30个字）*" aria-describedby="basic-addon1" name="title" id="news_title">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group" style="padding: 0 10px;">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">文章头图(单张，295*(高)*768(宽))：</span>
+                            <input id="news_title_img" name="title_img" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                </form>
+                <div id="ed">
+
+                </div>
+            </div>
+            <div class="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"  id="show_news_btn">
+                        预览
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary"  id="add_news_btn">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" id="show_news" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    显示文章
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="news_div">
+
+                </div>
+            </div>
+            <div class="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="edit_msg_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    编辑信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="bs-example bs-example-form" role="form" id="edit_news_msg_form">
+                    <div class="input-group">
+                        <span class="input-group-addon">标题</span>
+                        <input type="text" class="form-control " placeholder="输入标题" id="ed_title" name="title">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">浏览数</span>
+                        <input type="number" class="form-control " placeholder="输入浏览数" id="ed_browse" name="browse">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">点赞数</span>
+                        <input type="number" class="form-control " placeholder="输入点赞数" id="ed_agree" name="agree">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">评论数</span>
+                        <input type="number" class="form-control " placeholder="输入评论数" id="ed_comment" name="comment">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">发表日期</span>
+                        <input type="text" class="form-control " placeholder="输入添加时间{格式：2018-02-08-11-41-55（排序依据，格式错误可能导致乱序）}" id="ed_add_time" name="add_time">
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="edit_news_msg_btn">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--<script type="text/javascript" src="../../js/wangEditor.min.js"></script>-->
+<script type="text/javascript">
+
+    //  editor.txt.append('<p>追加的内容</p>')
+</script>
+
+<script src="../../js/news/news.js"></script>
+</body>
+</html>

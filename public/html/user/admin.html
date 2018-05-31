@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>index</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="css/public.css">-->
+    <link rel="stylesheet" href="../../css/user/admin.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/ale.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/public.js"></script>
+</head>
+<body>
+    <div>
+        <button type="button" class="btn btn-warning" data-target="#add_user" data-toggle="modal">添加二级管理</button>
+    </div>
+    <table class="table table-bordered table-hover" id="list_tb" >
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>管理员编号</th>
+            <th>账号</th>
+            <th>密码</th>
+            <th>类别</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        <tbody>
+
+        </tbody>
+        <!--<tr>-->
+            <!--<td>序号</td>-->
+            <!--<td>账号</td>-->
+            <!--<td>密码</td>-->
+            <!--<td>类别</td>-->
+            <!--<td>备注</td>-->
+            <!--<td>-->
+                <!--<button type="button" class="btn btn-primary edit_game" >编辑</button>-->
+                <!--<button type="button" class="btn btn-danger delete_game" >删除</button>-->
+            <!--</td>-->
+        <!--</tr>-->
+        </thead>
+    </table>
+
+    <div class="modal fade" id="add_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">添加二级管理员</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="bs-example bs-example-form" role="form">
+                        <div class="input-group">
+                            <span class="input-group-addon">账号</span>
+                            <input type="text" class="form-control" placeholder="输入账号" id="name">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">密码</span>
+                            <input type="password" class="form-control" placeholder="输入密码" id="password">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">备注</span>
+                            <input type="text" class="form-control" placeholder="输入备注" id="comment">
+                        </div>
+                        <br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="add_user_btn">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <script src="../../js/user/admin.js"></script>
+</body>
+</html>

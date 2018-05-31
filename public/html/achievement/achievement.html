@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Activity</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/publicSylet.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../js/fileinput.min.js"></script>
+</head>
+<body>
+<div class="head ui_flex_wrapper ui_flex_h">
+    <div>
+        <form class="bs-example bs-example-form" role="form">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1" id="search_text">名称<span class="caret"></span></button>
+
+                            <ul class="dropdown-menu" id="search_cls">
+                                <li>
+                                    <a href="#">ID</a>
+                                </li>
+                                <li>
+                                    <a href="#">名称</a>
+                                </li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							Search
+						</button>
+					</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </form>
+    </div>
+</div>
+
+<div class="modal fade " id="add_achievement_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加首页活动
+                </h4>
+            </div>
+            <div class="modal-body" id="add_achievement_mb">
+                <form role="form" id="add_achievement_form">
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">成就名称</span>
+                            <input type="text" class="form-control" placeholder="成就名称" aria-describedby="basic-addon1" name="name">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">成就类型</span>
+                            <input type="text" class="form-control" placeholder="成就类型" aria-describedby="basic-addon1" name="type">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">排序</span>
+                            <input type="text" class="form-control" placeholder="排序" aria-describedby="basic-addon1" value="1" name="sort">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">验证类型</span>
+                            <input type="text" class="form-control" placeholder="验证类型" aria-describedby="basic-addon1" name="validation_type">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">成就点</span>
+                            <input type="text" class="form-control" placeholder="成就点" aria-describedby="basic-addon1" value="1" name="achievement_point">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">兑换券</span>
+                            <input type="text" class="form-control" placeholder="兑换券" aria-describedby="basic-addon1" name="voucher">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">验证值</span>
+                            <input type="text" class="form-control" placeholder="验证值" aria-describedby="basic-addon1" name="data">
+                        </div>
+                        <div class="input-group col-lg-6">
+                            <span class="input-group-addon">成就说明</span>
+                            <input type="text" class="form-control" placeholder="成就说明" aria-describedby="basic-addon1" value="1" name="description">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <div class="img_tip">icon图片地址</div>
+                            <input id="achievement_img_list" name="" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="alert alert-warning hidden" id="err_alert">
+                <a href="#" class="close" data-dismiss="alert">
+                    &times;
+                </a>
+                <strong>错误！</strong>有未填项。
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="add_activity_btn">
+                    提交
+                </button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="edit_achievement_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    编辑信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="bs-example bs-example-form" role="form">
+                    <div class="input-group">
+                        <span class="input-group-addon">成就名称</span>
+                        <input type="text" class="form-control " placeholder="输入名字" id="ed_name">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">成就类型</span>
+                        <input type="text" class="form-control " placeholder="输入标题" id="ed_type">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">排序</span>
+                        <input type="number" class="form-control " placeholder="输入排序" id="ed_sort">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">验证类型</span>
+                        <input type="text" class="form-control " placeholder="验证类型" id="ed_validation_type">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">验证值</span>
+                        <input type="number" class="form-control " placeholder="输入验证值" id="ed_data">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">成就点</span>
+                        <input type="text" class="form-control " placeholder="输入成就点" id="ed_achievement_point">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">兑换券</span>
+                        <input type="number" class="form-control " placeholder="输入兑换券" id="ed_voucher">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon ">成就说明</span>
+                        <input type="text" class="form-control " placeholder="输入成就说明" id="ed_description">
+                    </div>
+                    <br>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <div class="img_tip">icon图片地址</div>
+                            <input id="deit_achievement_img_list" name="" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                    <br>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<table class="table table-bordered table-hover" id="achievement_table">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>成就名称</th>
+        <th>ID</th>
+        <th>icon图片地址</th>
+        <th>成就类型</th>
+        <th>排序</th>
+        <th>验证类型</th>
+        <th>验证值</th>
+        <th>成就点</th>
+        <th>兑换券</th>
+        <th>成就说明</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+</table>
+
+<div class="ui_flex_wrapper foot">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_achievement_model">添加</button>
+    <ul class="pagination" style="">
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>
+
+<script src="../js/achievement/achievement.js"></script>
+</body>
+</html>

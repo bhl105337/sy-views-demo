@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>news</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/fileinput.min.js"></script>
+    <script src="../../js/public.js"></script>
+    <script src="../../js/qiniu.min.js"></script>
+</head>
+<body>
+<table class="table table-bordered table-hover" id="head_game_table">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>游戏名称</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="t_head_game">
+    <!--<tr>-->
+    <!--<td>序号</td>-->
+    <!--<td>文章ID</td>-->
+    <!--<td>文章标题</td>-->
+    <!--<td>点赞数</td>-->
+    <!--<td>评论数</td>-->
+    <!--<td>添加时间</td>-->
+    <!--<td>上传者</td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+<button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#m_add_head_game">添加游戏</button>
+<div class="modal fade bs-example-modal-lg" id="m_add_head_game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加游戏
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add_news_from">
+                    <div class="col-lg-6  ">
+                        <input type="text" class="form-control" id="game_name_inp">
+                    </div>
+                    <div class="col-lg-6  ">
+                        <select name="game_id" id="head_game_select" class="form-control">
+                            <!--<option value="0" selected="selected"></option>-->
+                        </select>
+                    </div>
+                    <br>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group" style="padding: 0 10px;">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">游戏展示图(单张，4(宽)比3(高))：</span>
+                            <input id="head_game_img" name="title_img" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary"  id="add_head_game_btn">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--<script type="text/javascript" src="../../js/wangEditor.min.js"></script>-->
+<script type="text/javascript">
+
+    //  editor.txt.append('<p>追加的内容</p>')
+</script>
+
+<script src="../../js/news/headGame.js"></script>
+</body>
+</html>

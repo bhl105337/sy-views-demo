@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>news</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/fileinput.min.js"></script>
+    <script src="../../js/public.js"></script>
+    <style>
+        .input-group-addon:first-child {
+            min-width: 100px;
+        }
+    </style>
+</head>
+<body>
+<table class="table table-bordered table-hover" id="h5_table">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>游戏名称</th>
+        <th>游戏介绍</th>
+        <th>游戏链接</th>
+        <th>优先</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="t_h5">
+    <!--<tr>-->
+    <!--<td>序号</td>-->
+    <!--<td>游戏名称</td>-->
+    <!--<td>游戏介绍</td>-->
+    <!--<td>游戏链接</td>-->
+    <!--<td>优先</td>-->
+    <!--<td>操作</td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+<button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#m_add_h5">添加H5</button>
+<div class="modal fade bs-example-modal-lg" id="m_add_h5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" >
+                    添加H5
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add_h5_from">
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-10" style="padding: 0 10px;">
+                            <span class="input-group-addon">游戏名称</span>
+                            <input type="text" class="form-control " placeholder="游戏名称*" aria-describedby="basic-addon1" name="name" id="h5_name">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-10" style="padding: 0 10px;">
+                            <span class="input-group-addon">游戏网址</span>
+                            <input type="text" class="form-control " placeholder="游戏网址*" aria-describedby="basic-addon1" name="url" id="h5_url">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group">
+                        <div class="input-group col-lg-10" style="padding: 0 10px;">
+                            <span class="input-group-addon">游戏介绍</span>
+                            <input type="text" class="form-control " placeholder="游戏介绍*" aria-describedby="basic-addon1" name="recommend" id="h5_recommend">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group" style="padding: 0 10px;">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">游戏icon：</span>
+                            <input id="h5_icon" name="icon" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                    <div class="row ui_flex_wrapper ui_flex_h form-group" style="padding: 0 10px;">
+                        <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                            <span class="img_tip">游戏头图(单张，295*(高)*768(宽))：</span>
+                            <input id="h5_title_img" name="title_img" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary"  id="add_h5_btn">
+                        提交
+                    </button>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="edit_msg_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">/
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    编辑信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="bs-example bs-example-form" role="form" id="edit_h5_msg_form">
+                    <div class="input-group">
+                        <span class="input-group-addon">id</span>
+                        <input type="number" disabled="disabled"  class="form-control "  id="ed_id" name="id">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">名称</span>
+                        <input type="text" class="form-control " placeholder="输入游戏名称" id="ed_name" name="name">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">介绍</span>
+                        <input type="text" class="form-control " placeholder="输入游戏介绍" id="ed_commend" name="commend">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">链接</span>
+                        <input type="text" class="form-control " placeholder="输入游戏链接" id="ed_url" name="url">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">优先</span>
+                        <input type="number" class="form-control " placeholder="输入优先" id="ed_sort" name="sort">
+                    </div>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="edit_h5_msg_btn">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script type="text/javascript">
+
+    //  editor.txt.append('<p>追加的内容</p>')
+</script>
+
+<script src="../../js/h5/h5.js"  charset="UTF-8"></script>
+</body>
+</html>

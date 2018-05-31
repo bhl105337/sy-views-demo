@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>one</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/index.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="waiting" class="hidden" style="height: 100vh;width: 100vw;position: absolute;top:0;left: 0; z-index: 1;background-color: rgba(0,0,0,0.5)">
+    <div class="spinner">
+        <div class="spinner-container container1">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container2">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
+            <div class="circle4"></div>
+        </div>
+    </div>
+</div>
+<div id="user" class="ui_flex_wrapper ui_flex_h">
+    <!-- Split button -->
+    <div class="btn-group">
+        <button type="button" class="btn btn-warning" id="user_name">用户名</button>
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <!--<span class="sr-only">Toggle Dropdown</span>-->
+        </button>
+        <ul class="dropdown-menu">
+            <li id="user_close">退出</li>
+        </ul>
+    </div>
+</div>
+<div id="main" class="ui_flex_wrapper">
+    <ul class="nav nav-pills nav-stacked">
+        <!--<li role="presentation" class="active" data-href="html/game/game.html"><a href="#" >游戏</a></li>-->
+        <!--<li role="presentation" class="" data-href="html/h5/h5.html"><a href="#" >H5</a></li>-->
+        <!--<li role="presentation" data-href="html/store/store.html"><a href="#">商品</a></li>-->
+        <!--<li role="presentation" data-href="html/activity/activity.html"><a href="#">推荐位</a></li>-->
+        <!--<li role="presentation" data-href="html/game/clsActive.html"><a href="#">分类推荐位</a></li>-->
+        <!--<li role="presentation" data-href="html/game/hotGame.html"><a href="#">热游推荐位</a></li>-->
+        <!--<li role="presentation" data-href="html/news/news.html"><a href="#">资讯</a></li>-->
+        <!--<li role="presentation" data-href="html/user/user.html" class="top_admin"><a href="#">用户</a></li>-->
+        <!--<li role="presentation" data-href="html/qudao/adminQudao.html" class="top_admin"><a href="#">渠道管理</a></li>-->
+        <!--<li role="presentation" data-href="html/user/admin.html" class="top_admin"><a href="#">超级管理员</a></li>-->
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseOne">
+                            游戏管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse ">
+                    <div class="panel-body nav nav-pills nav-stacked">
+                        <li role="presentation" class="" data-href="html/game/game.html"><a href="#" >游戏      </a></li>
+                        <li role="presentation" data-href="html/activity/activity.html"><a href="#">推荐位</a></li>
+                        <li role="presentation" data-href="html/activity/subject.html"><a href="#">专题</a></li>
+                        <li role="presentation" data-href="html/game/tag.html"><a href="#">标签</a></li>
+                        <!--<li role="presentation" data-href="html/game/hotGame.html"><a href="#">热游推荐位</a></li>-->
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseTwo">
+                            资讯管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <li role="presentation" data-href="html/news/news.html"><a href="#">资讯</a></li>
+                        <li role="presentation" data-href="html/news/headGame.html"><a href="#">头部游戏设置</a></li>
+                        <li role="presentation" data-href="html/news/slideGame.html"><a href="#">横向滑动游戏设置</a></li>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseThree">
+                            H5游戏管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <li role="presentation" class="" data-href="html/h5/h5.html"><a href="#" >H5</a></li>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseSix">
+                            攻略管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseSix" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <li role="presentation" class="" data-href="html/strategy/strategy.html"><a href="#" >攻略</a></li>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h4 class="panel-title">-->
+                        <!--<a data-toggle="collapse" data-parent="#accordion"-->
+                           <!--href="#collapseSeven">-->
+                            <!--消息管理-->
+                        <!--</a>-->
+                    <!--</h4>-->
+                <!--</div>-->
+                <!--<div id="collapseSeven" class="panel-collapse collapse">-->
+                    <!--<div class="panel-body">-->
+                        <!--<li role="presentation" data-href="html/tip/tip.html" class="top_admin"><a href="#">消息提醒</a></li>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseFour">
+                            渠道管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <li role="presentation" data-href="html/qudao/adminQudao.html" class="top_admin"><a href="#">渠道</a></li>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseFive">
+                            超级管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <li role="presentation" data-href="html/user/admin.html" class="top_admin"><a href="#">超级管理员</a></li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ul>
+
+
+    <div id="right_contain" class="ui_flex_wide">
+        <iframe src="" frameborder="0" height="99%" width="100%" id="myiframe"></iframe>
+    </div>
+</div>
+<script>
+    function waiting(state) {
+        if(state=="show"){
+            $("#waiting").removeClass("hidden")
+        }else {
+            $("#waiting").addClass("hidden")
+        }
+    }
+</script>
+<script src="js/index.js"></script>
+</body>
+</html>

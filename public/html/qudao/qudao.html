@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>qudao</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/public.js"></script>
+</head>
+<style>
+    body{
+        padding: 0 30px;
+    }
+    .head{
+        margin-bottom: 30px;
+    }
+    .list-inline{
+        padding-left: 20px;
+    }
+</style>
+<body>
+<div>
+    <h4></h4>
+    <ul class="list-inline">
+
+        <input type="date" id="startTime">至
+        <input type="date" id="endTime">
+        <li>
+            <button type="button" class="btn btn-primary edit"   id="search">查询</button>
+        </li>
+    </ul>
+</div>
+<table class="table table-bordered table-hover" id="qudao_table">
+    <thead>
+    <tr>
+        <th>日期</th>
+        <th>新增用户数</th>
+        <th>活跃用户数</th>
+        <th>总流水(单位：元)</th>
+        <th>最终收益(单位：元)</th>
+    </tr>
+    </thead>
+    <tbody id="qd_show_tb">
+
+    </tbody>
+</table>
+<div class="ui_flex_wrapper foot">
+    <ul class="pagination" style="">
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <!--<li><a href="#">2</a></li>-->
+        <!--<li><a href="#">3</a></li>-->
+        <!--<li><a href="#">4</a></li>-->
+        <!--<li><a href="#">5</a></li>-->
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>
+<script src="../../js/qudao/qudao.js"></script>
+</body>
+</html>

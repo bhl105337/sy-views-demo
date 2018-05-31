@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Activity</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/publicSylet.css">
+    <link rel="stylesheet" href="../../css/fileinput.min.css">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/ale.js"></script>
+
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="../../js/fileinput.min.js"></script>
+    <script src="../../js/qiniu.min.js"></script>
+    <script src="../../js/public.js"></script>
+    <style>
+        #add_activity_mb{
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+<table class="table table-bordered table-hover" id="subject_table">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>ID</th>
+            <th>标题</th>
+            <th>描述</th>
+            <th>激活状态</th>
+            <th>图片地址</th>
+            <th>系统</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody id="subject_table_body" >
+
+
+    </tbody>
+</table>
+<div class="modal fade" id="add_subject_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" >添加专题</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body" id="add_activity_mb">
+                    <form role="form" id="add_subject_form">
+
+                        <label class="checkbox-inline">
+                            <input type="radio" name="sys"
+                                   value="2" checked="checked"> android
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="sys"
+                                   value="1" > ios
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="sys"
+                                   value="0" > 通用
+                        </label>
+                        <br>
+                        <br>
+                        <div class="row ui_flex_wrapper ui_flex_h form-group">
+                            <div class="input-group col-lg-6">
+                                <span class="input-group-addon">标题</span>
+                                <input type="text" class="form-control" placeholder="标题" aria-describedby="basic-addon1" name="title">
+                            </div>
+                        </div>
+                        <div class="row ui_flex_wrapper ui_flex_h form-group">
+                            <div class="input-group col-lg-6">
+                                <span class="input-group-addon">介绍</span>
+                                <input type="text" class="form-control" placeholder="排序" aria-describedby="basic-addon1" value="1" name="detail">
+                            </div>
+                        </div>
+                        <div class="row ui_flex_wrapper ui_flex_h form-group">
+                            <div class="input-group col-lg-6">
+                                <span class="input-group-addon">激活状态</span>
+                                <input type="text" class="form-control" placeholder="激活状态，1激活，0不激活" aria-describedby="basic-addon1" value="1" name="active">
+                            </div>
+                        </div>
+                        <div class="row ui_flex_wrapper ui_flex_h form-group">
+                            <div class="form-group title_img ui_flex_wrapper ui_flex_v">
+                                <div class="img_tip">图片：</div>
+                                <input id="subject_img" name="active_img" type="file" multiple  class="file"  data-show-upload="false" data-show-caption="true">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add_subject_btn">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="add_game_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" >添加游戏</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="add_news_from">
+                    <div class="col-lg-4  row">
+                        <input type="text" class="form-control" id="subject_name_inp" placeholder="输入游戏筛选">
+                    </div>
+                    <div class="col-lg-4  row">
+                        <select name="game_id" id="subject_game_select" class="form-control">
+                            <!--<option value="0" selected="selected"></option>-->
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add_subject_game_btn">添加</button>
+                </form>
+                <br>
+                <table class="table table-bordered table-hover" id="subject_game_table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>游戏名称</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="subject_game" >
+
+                    <!--<tr>-->
+                        <!--<td>序号</td>-->
+                        <!--<td>游戏名</td>-->
+                        <!--<td>名称</td>-->
+                        <!--<td> <button type="button" class="btn btn-danger" >移除</button></td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <!--<button type="button" class="btn btn-primary" >提交更改</button>-->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="ui_flex_wrapper foot">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_subject_model" id="gameType">添加</button>
+</div>
+
+<script src="../../js/activity/subject.js"  charset="UTF-8"></script>
+</body>
+</html>

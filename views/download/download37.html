@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>oneyouxi</title>
+	<!--<link rel="stylesheet" type="text/css" href="css/download.css" />-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<style type="text/css">
+		* {
+
+			margin: 0;
+			padding: 0;
+		}
+
+
+		.logo {
+			width: 5.875rem;
+			height: 5.875rem;
+			background-image: url(../images/ONEgameicon256.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-clip: content-box;
+			margin: 0 auto;
+			margin-top: 5rem;
+		}
+
+		.title {
+			font-size: 18px;
+			color: rgb(166, 166, 166);
+			text-align: center;
+			margin-top: 1rem;
+		}
+
+		.slogan {
+			width: 14.625rem;
+			height: 6rem;
+			background-image: url(../images/biaoyu.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-clip: content-box;
+			margin: 0 auto;
+			margin-top: 4rem;
+		}
+
+		.android {
+			display: block;
+			margin: 0 auto;
+			margin-top: 4rem;
+			width: 18.375rem;
+			height: 3.75rem;
+			background-image: url(../images/anzhuo.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-clip: content-box;
+
+		}
+		.arrow{
+			background-image: url(../images/jian1.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-clip: content-box;
+			width: 20%;
+			height: 20%;
+			position: absolute;
+			top: 4rem;
+			right: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="logo"></div>
+<div class="title">one游戏</div>
+<div class="slogan"></div>
+<a id="android_download" class="android" href="http://apk.oneyouxi.com.cn/one%E6%B8%B8%E6%88%8F.apkH5DF0A198_0205175305.apk" ></a>
+<div class="arrow">
+
+</div>
+</body>
+<script>
+	var isAdd=false;
+    $('#android_download').click(function () {
+        if(!isAdd){
+            $.ajax({
+                type:'get',
+                url:'/addDownloadNum',
+                data:{type:37}
+            });
+            $.ajax({
+                type:'get',
+                url:'/addDownloadNum',
+                data:{type:1}
+            });
+            isAdd=true;
+		}else {
+            return
+		}
+
+    });
+</script>
+</html>
